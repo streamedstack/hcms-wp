@@ -14,7 +14,7 @@ jobs:
       - name: Build Image
         run: |
           repo_root=$(pwd)
-          cd wp/web
+          cd web
           yyyy_mm_dd=$(date +'%Y-%m-%d')
           commit_hash=$(echo ${GITHUB_SHA} | cut -c1-8)
           docker build -t dambrogia/wp-headless-cms:${yyyy_mm_dd}-${commit_hash} .

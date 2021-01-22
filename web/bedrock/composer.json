@@ -1,0 +1,105 @@
+{
+  "name": "roots/bedrock",
+  "type": "project",
+  "license": "MIT",
+  "description": "WordPress boilerplate with modern development tools, easier configuration, and an improved folder structure",
+  "homepage": "https://roots.io/bedrock/",
+  "authors": [
+    {
+      "name": "Scott Walkinshaw",
+      "email": "scott.walkinshaw@gmail.com",
+      "homepage": "https://github.com/swalkinshaw"
+    },
+    {
+      "name": "Ben Word",
+      "email": "ben@benword.com",
+      "homepage": "https://github.com/retlehs"
+    }
+  ],
+  "keywords": [
+    "bedrock", "composer", "roots", "wordpress", "wp", "wp-config"
+  ],
+  "support": {
+    "issues": "https://github.com/roots/bedrock/issues",
+    "forum": "https://discourse.roots.io/category/bedrock"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "only": ["wpackagist-plugin/*", "wpackagist-theme/*"]
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wp-premium/advanced-custom-fields-pro",
+        "type": "wordpress-plugin",
+        "version": "5.8.7",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/wp-premium/advanced-custom-fields-pro/archive/5.8.7.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "webdevstudios/custom-post-type-ui",
+        "type": "wordpress-plugin",
+        "version": "1.8.2",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/WebDevStudios/custom-post-type-ui/archive/1.8.2.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "airesvsg/acf-to-rest-api",
+        "type": "wordpress-plugin",
+        "version": "3.3.2",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/airesvsg/acf-to-rest-api/archive/3.3.2.zip"
+        }
+      }
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "composer/installers": "^1.8",
+    "vlucas/phpdotenv": "^5.2",
+    "oscarotero/env": "^2.1",
+    "roots/bedrock-autoloader": "^1.0",
+    "roots/wordpress": "5.6",
+    "roots/wp-config": "1.0.0",
+    "roots/wp-password-bcrypt": "1.0.0",
+    "webdevstudios/custom-post-type-ui": "1.8.2",
+    "wp-premium/advanced-custom-fields-pro": "5.8.7"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.5.8",
+    "roave/security-advisories": "dev-master"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "installer-paths": {
+      "web/app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+      "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
+      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+    },
+    "wordpress-install-dir": "web/wp"
+  },
+  "scripts": {
+    "post-root-package-install": [],
+    "test": [
+      "phpcs"
+    ]
+  }
+}

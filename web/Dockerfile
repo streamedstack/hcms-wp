@@ -1,0 +1,45 @@
+FROM registry.access.redhat.com/ubi8/php-74:1-13
+
+ARG DB_HOST
+ENV DB_HOST=${DB_HOST}
+ARG DB_NAME
+ENV DB_NAME=${DB_NAME}
+ARG DB_PASSWORD
+ENV DB_PASSWORD=${DB_PASSWORD}
+ARG DB_USER
+ENV DB_USER=${DB_USER}
+ARG WP_ENV
+ENV WP_ENV=${WP_ENV}
+ARG WP_HOME
+ENV WP_HOME=${WP_HOME}
+ARG AUTH_KEY
+ENV AUTH_KEY=${AUTH_KEY}
+ARG SECURE_AUTH_KEY
+ENV SECURE_AUTH_KEY=${SECURE_AUTH_KEY}
+ARG LOGGED_IN_KEY
+ENV LOGGED_IN_KEY=${LOGGED_IN_KEY}
+ARG NONCE_KEY
+ENV NONCE_KEY=${NONCE_KEY}
+ARG AUTH_SALT
+ENV AUTH_SALT=${AUTH_SALT}
+ARG SECURE_AUTH_SALT
+ENV SECURE_AUTH_SALT=${SECURE_AUTH_SALT}
+ARG LOGGED_IN_SALT
+ENV LOGGED_IN_SALT=${LOGGED_IN_SALT}
+ARG NONCE_SALT
+ENV NONCE_SALT=${NONCE_SALT}
+
+# These env vars are required and constant based on the parent image
+# https://github.com/sclorg/s2i-php-container/blob/master/7.4/README.md#environment-variables-for-source-to-image
+ENV DOCUMENTROOT=/web
+ENV PHP_MEMORY_LIMIT=756M
+ENV OPCACHE_MEMORY_CONSUMPTION=1024M
+ENV HTTPD_START_SERVERS=16
+
+# https://catalog.redhat.com/software/containers/rhel8/php-74/5f5211e39df2542e4756afd1
+USER root
+ADD bedrock /tmp/src
+RUN /usr/libexec/s2i/assemble
+USER default
+
+CMD /usr/libexec/s2i/run

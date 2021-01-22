@@ -1,0 +1,46 @@
+version: "3"
+services:
+    # This is only intended to be run locally.
+    local-wp-db:
+        container_name: local-wp-db
+        image: mariadb:10.4-focal
+        ports: [ 3306:3306 ]
+        networks: [ local-wp ]
+        restart: always
+        volumes:
+            - ./db:/var/lib/mysql
+        environment:
+            - ALLOW_EMPTY_PASSWORD=no
+            - MYSQL_USER=wp
+            - MYSQL_PASSWORD=wp
+            - MYSQL_DATABASE=wp
+            - MYSQL_ROOT_PASSWORD=root
+
+    local-wp-web:
+        privileged: true
+        container_name: local-wp-web
+        ports: [ 8080:8080 ]
+        networks: [ local-wp ]
+        depends_on: [ local-wp-db ]
+        volumes:
+          - ./web/bedrock:/opt/app-root/src/
+        build:
+            context: ./web
+            args:
+                - DB_HOST=local-wp-db
+                - DB_NAME=wp
+                - DB_PASSWORD=wp
+                - DB_USER=wp
+                - WP_ENV=development
+                - WP_HOME=http://localhost:8080
+                - AUTH_KEY=these_are_random_salts
+                - SECURE_AUTH_KEY=these_are_random_salts
+                - LOGGED_IN_KEY=these_are_random_salts
+                - NONCE_KEY=these_are_random_salts
+                - AUTH_SALT=these_are_random_salts
+                - SECURE_AUTH_SALT=these_are_random_salts
+                - LOGGED_IN_SALT=these_are_random_salts
+                - NONCE_SALT=these_are_random_salts
+
+networks:
+    local-wp:

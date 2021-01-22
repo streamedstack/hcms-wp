@@ -1,0 +1,21 @@
+name: WordPress Build
+
+on: push
+
+jobs:
+  build:
+    name: Build WordPress Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Image
+        run: |
+          repo_root=$(pwd)
+          cd wp/web
+          yyyy_mm_dd=$(date +'%Y-%m-%d')
+          commit_hash=$(echo ${GITHUB_SHA} | cut -c1-8)
+          docker build -t dambrogia/wp-headless-cms:${yyyy_mm_dd}-${commit_hash} .
+          exit 0
